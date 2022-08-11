@@ -17,6 +17,9 @@
   "files": [
     "/dist"
   ],
+  "bin": {
+    "oauth-mock-server": "./dist/index.js"
+  },
   "scripts": {
     "build": "tsup src/index.ts --dts --format cjs,esm",
     "clean": "rm -rf dist/ node_modules/",
