@@ -1,33 +1,14 @@
 import fastifyFormBody from '@fastify/formbody';
 import fastify from 'fastify';
 import jwt from 'jsonwebtoken';
+import Config from './oauth-mock-server.json'
 
 const server = fastify();
 void server.register(fastifyFormBody);
 
-const realm = 'bookyp'; // TODO: add way to load realm name from config
+const realm = Config.realm; 
 
-// TODO: add way to load users from config
-const users = [
-  {
-    id: '1',
-    username: 'toni',
-    email: 'toni@test.com',
-    name: 'Toni Tester',
-  },
-  {
-    id: '2',
-    username: 'alice',
-    email: 'alice@wonderland.org',
-    name: 'Alice Wonderland',
-  },
-  {
-    id: '3',
-    username: 'herbert',
-    email: 'her@bert.de',
-    name: 'Herbert',
-  },
-];
+const users = Config.users;
 
 const jwtSecret = 'mySuperDuperSecret';
 
