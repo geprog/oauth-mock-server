@@ -1,12 +1,13 @@
 import fastifyFormBody from '@fastify/formbody';
 import fastify from 'fastify';
 import jwt from 'jsonwebtoken';
-import Config from './oauth-mock-server.json'
+
+import Config from './oauth-mock-server.json';
 
 const server = fastify();
 void server.register(fastifyFormBody);
 
-const realm = Config.realm; 
+const realm = Config.realm;
 
 const users = Config.users;
 

@@ -1,5 +1,4 @@
-export interface Config
-{
-    realm: string;   
-    users: string[];
+export interface Config {
+  realm: string;
+  users: string[];
 }
