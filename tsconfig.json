@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "esnext",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
@@ -14,10 +16,20 @@
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "paths": {
-      "~/*": ["./*"],
-      "$/*": ["../test/*"]
+      "~/*": [
+        "./*"
+      ],
+      "$/*": [
+        "../test/*"
+      ]
     }
   },
-  "include": ["src", "test"],
-  "exclude": ["node_modules", "**/dist"]
+  "include": [
+    "src",
+    "test"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/dist"
+  ]
 }
