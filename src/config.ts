@@ -4,7 +4,7 @@ import path from 'path';
 
 interface RealmUsers {
   realm: string;
-  users: [{ id: string; username: string; email: string; name: string }];
+  users: { id: string; username: string; email: string; name: string }[];
 }
 
 export function getConfig(): RealmUsers {
@@ -32,13 +32,23 @@ export function getConfig(): RealmUsers {
     ],
   };
 
-  const configPath = path.join(cwd, 'oauth-mock-server.json');
+  const configPath = path.join(cwd(), 'oauth-mock-server.json');
   if (!fs.existsSync(configPath)) {
     return defaultConfig;
   }
 
   const rawConfig = fs.readFileSync('/.oauth-mock-server.json');
-  const config = {};
-  Object.assign(config, defaultConfig, JSON.parse(rawConfig));
+  const config = {
+    realm: '',
+    users: [
+      {
+        id: '',
+        username: '',
+        email: '',
+        name: '',
+      },
+    ],
+  };
+  Object.assign(config, defaultConfig, JSON.parse(rawConfig.toString()));
   return config;
 }
