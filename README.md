@@ -10,26 +10,26 @@ You can adjust the default configuration by placing a file `oauth-mock-server.js
 
 ```json
 {
-    "realm": "my-project",
-    "users": [
-        {
-            "id": "1",
-            "username": "toni",
-            "email": "toni@test.com",
-            "name": "Toni Tester",
-        },
-        {
-            "id": "2",
-            "username": "alice",
-            "email": "alice@wonderland.org",
-            "name": "Alice Wonderland",
-        },
-        {
-            "id": "3",
-            "username": "herbert",
-            "email": "her@bert.de",
-            "name": "Herbert",
-        }
-    ]
+  "realm": "my-project",
+  "users": [
+    {
+      "id": "1",
+      "username": "toni",
+      "email": "toni@test.com",
+      "name": "Toni Tester"
+    },
+    {
+      "id": "2",
+      "username": "alice",
+      "email": "alice@wonderland.org",
+      "name": "Alice Wonderland"
+    },
+    {
+      "id": "3",
+      "username": "herbert",
+      "email": "her@bert.de",
+      "name": "Herbert"
+    }
+  ]
 }
 ```
