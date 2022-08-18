@@ -2,13 +2,20 @@ import fs from 'fs';
 import { cwd } from 'node:process';
 import path from 'path';
 
-interface RealmUsers {
-  realm: string;
-  users: { id: string; username: string; email: string; name: string }[];
-}
+export type ConfigUser = {
+  id: string;
+  username: string;
+  email: string;
+  name: string;
+};
 
-export function getConfig(): RealmUsers {
-  const defaultConfig = {
+export type Config = {
+  realm: string;
+  users: ConfigUser[];
+};
+
+export function getConfig(): Config {
+  const defaultConfig = <Config>{
     realm: 'my-project',
     users: [
       {
@@ -37,18 +44,8 @@ export function getConfig(): RealmUsers {
     return defaultConfig;
   }
 
-  const rawConfig = fs.readFileSync('/.oauth-mock-server.json');
-  const config = {
-    realm: '',
-    users: [
-      {
-        id: '',
-        username: '',
-        email: '',
-        name: '',
-      },
-    ],
-  };
+  const rawConfig = fs.readFileSync(configPath);
+  const config = <Config>{};
   Object.assign(config, defaultConfig, JSON.parse(rawConfig.toString()));
   return config;
 }
