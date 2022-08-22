@@ -1,33 +1,12 @@
 import fastifyFormBody from '@fastify/formbody';
+import { getConfig } from 'config';
 import fastify from 'fastify';
 import jwt from 'jsonwebtoken';
 
+const config = getConfig();
+
 const server = fastify();
 void server.register(fastifyFormBody);
-
-const realm = 'bookyp'; // TODO: add way to load realm name from config
-
-// TODO: add way to load users from config
-const users = [
-  {
-    id: '1',
-    username: 'toni',
-    email: 'toni@test.com',
-    name: 'Toni Tester',
-  },
-  {
-    id: '2',
-    username: 'alice',
-    email: 'alice@wonderland.org',
-    name: 'Alice Wonderland',
-  },
-  {
-    id: '3',
-    username: 'herbert',
-    email: 'her@bert.de',
-    name: 'Herbert',
-  },
-];
 
 const jwtSecret = 'mySuperDuperSecret';
 
@@ -35,7 +14,7 @@ const randomString = () => (Math.random() + 1).toString(36).substring(7);
 
 let sessions: { code: string; user_id: string; access_token?: string }[] = [];
 
-server.get(`/auth/realms/${realm}/protocol/openid-connect/auth`, async (request, reply) => {
+server.get(`/auth/realms/${config.realm}/protocol/openid-connect/auth`, async (request, reply) => {
   const query = request.query as { redirect_uri: string; error?: string };
 
   const template = `
@@ -84,7 +63,7 @@ server.get(`/auth/realms/${realm}/protocol/openid-connect/auth`, async (request,
         <div>
           <p>Please login with one of the following usernames:</p>
           <ul>
-            ${users
+            ${config.users
               .map(
                 (user) =>
                   `<li>
@@ -103,12 +82,13 @@ server.get(`/auth/realms/${realm}/protocol/openid-connect/auth`, async (request,
 
 server.all('/do-login', async (request, reply) => {
   const query = (request.body || request.query) as { username: string; redirect_uri: string };
-  const user = users.find((u) => u.username === query.username) || users.find((u) => u.email === query.username);
+  const user =
+    config.users.find((u) => u.username === query.username) || config.users.find((u) => u.email === query.username);
   const redirect_uri = query.redirect_uri;
 
   if (!user) {
     await reply.redirect(
-      `/auth/realms/${realm}/protocol/openid-connect/auth?error=invalid_credentials&redirect_uri=${redirect_uri}`,
+      `/auth/realms/${config.realm}/protocol/openid-connect/auth?error=invalid_credentials&redirect_uri=${redirect_uri}`,
     );
     return;
   }
@@ -119,7 +99,7 @@ server.all('/do-login', async (request, reply) => {
   await reply.redirect(`${redirect_uri}?session_state=${sessionState}&code=${code}`);
 });
 
-server.post(`/auth/realms/${realm}/protocol/openid-connect/token`, async (request, reply) => {
+server.post(`/auth/realms/${config.realm}/protocol/openid-connect/token`, async (request, reply) => {
   const body = request.body as {
     grant_type: string;
     code: string;
@@ -139,7 +119,7 @@ server.post(`/auth/realms/${realm}/protocol/openid-connect/token`, async (reques
   const payload = {
     sub: session.user_id, // TODO check if valid (seems to work somehow)
     typ: 'Bearer',
-    aud: realm,
+    aud: config.realm,
   };
 
   const accessToken = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
@@ -152,15 +132,15 @@ server.post(`/auth/realms/${realm}/protocol/openid-connect/token`, async (reques
   };
 });
 
-server.get(`/auth/realms/${realm}/protocol/openid-connect/userinfo`, (request) => {
+server.get(`/auth/realms/${config.realm}/protocol/openid-connect/userinfo`, (request) => {
   const headers = request.headers as { authorization: string };
   const access_token = headers.authorization.replace('Bearer ', '');
   const payload = jwt.verify(access_token, jwtSecret) as { sub: string };
   const userId = payload.sub;
-  return users.find((s) => s.id === userId);
+  return config.users.find((s) => s.id === userId);
 });
 
-server.get(`/auth/realms/${realm}/protocol/openid-connect/logout`, async (request, reply) => {
+server.get(`/auth/realms/${config.realm}/protocol/openid-connect/logout`, async (request, reply) => {
   const query = request.query as { redirect_uri: string };
   await reply.redirect(query.redirect_uri);
 });
