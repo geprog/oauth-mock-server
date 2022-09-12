@@ -21,11 +21,11 @@
     "oauth-mock-server": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsup src/index.ts --dts --format cjs,esm",
+    "build": "tsx contrib/build.ts",
     "clean": "rm -rf dist/ node_modules/",
     "lint": "eslint --max-warnings 0 .",
     "lint:format": "prettier --check .",
-    "start": "pnpm run build --watch",
+    "start": "pnpm tsup src/index.ts --dts --format cjs,esm --watch",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -43,6 +43,7 @@
     "@geprog/semantic-release-config": "1.0.0",
     "@types/jsonwebtoken": "8.5.8",
     "c8": "7.11.3",
+    "esbuild": "0.15.7",
     "eslint": "8.8.0",
     "prettier": "2.5.1",
     "semantic-release": "19.0.2",
