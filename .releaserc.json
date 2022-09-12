@@ -1,3 +1,13 @@
 {
-  "extends": "@geprog/semantic-release-config"
+  "extends": "@geprog/semantic-release-config",
+  "plugins": [
+    "@codedependant/semantic-release-docker",
+    {
+      "dockerTags": ["latest", "{{version}}"],
+      "dockerFile": "Containerfile",
+      "dockerRegistry": "ghcr.io",
+      "dockerProject": "geprog",
+      "dockerImage": "oauth-mock-server"
+    }
+  ]
 }
