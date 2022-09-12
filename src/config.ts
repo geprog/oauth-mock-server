@@ -16,7 +16,7 @@ export type Config = {
 
 export function getConfig(): Config {
   const defaultConfig = <Config>{
-    realm: 'my-project',
+    realm: process.env.REALM || 'my-project',
     users: [
       {
         id: '1',
