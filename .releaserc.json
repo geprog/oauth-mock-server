@@ -1,13 +1,31 @@
 {
   "extends": "@geprog/semantic-release-config",
   "plugins": [
-    "@codedependant/semantic-release-docker",
-    {
-      "dockerTags": ["latest", "{{version}}"],
-      "dockerFile": "Containerfile",
-      "dockerRegistry": "ghcr.io",
-      "dockerProject": "geprog",
-      "dockerImage": "oauth-mock-server"
-    }
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "angular",
+        "releaseRules": [
+          { "type": "build", "release": "patch" },
+          { "type": "chore", "release": "patch" },
+          { "type": "ci", "release": "patch" },
+          { "type": "refactor", "release": "patch" },
+          { "type": "revert", "release": "patch" }
+        ]
+      }
+    ],
+    "@semantic-release/release-notes-generator",
+    ["@semantic-release/npm", { "npmPublish": true }],
+    "@semantic-release/github",
+    [
+      "@codedependant/semantic-release-docker",
+      {
+        "dockerTags": ["latest", "{{version}}"],
+        "dockerFile": "Containerfile",
+        "dockerRegistry": "ghcr.io",
+        "dockerProject": "geprog",
+        "dockerImage": "oauth-mock-server"
+      }
+    ]
   ]
 }
