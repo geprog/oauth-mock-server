@@ -122,13 +122,13 @@ server.post(`/auth/realms/${config.realm}/protocol/openid-connect/token`, async 
     aud: config.realm,
   };
 
-  const accessToken = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
+  const accessToken = jwt.sign(payload, jwtSecret, { expiresIn: config.tokenExpiresIn });
 
   return {
     access_token: accessToken,
     token_type: 'Bearer',
     id_token: accessToken,
-    expires_in: 3600,
+    expires_in: config.tokenExpiresIn,
   };
 });
 
@@ -146,11 +146,10 @@ server.get(`/auth/realms/${config.realm}/protocol/openid-connect/logout`, async 
 });
 
 async function start() {
-  const port = 5000; // TODO: support custom port
   try {
     // eslint-disable-next-line no-console
-    console.log(`Starting server http://localhost:${port} ...`);
-    await server.listen({ port, host: '0.0.0.0' });
+    console.log(`Starting server http://localhost:${config.port} ...`);
+    await server.listen({ port: config.port, host: '0.0.0.0' });
   } catch (err) {
     server.log.error(err);
     process.exit(1);
