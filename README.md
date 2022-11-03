@@ -10,6 +10,7 @@ You can adjust the default configuration by placing a file `oauth-mock-server.js
 
 ```json
 {
+  "port": 5000,
   "realm": "my-project",
   "users": [
     {
@@ -30,6 +31,7 @@ You can adjust the default configuration by placing a file `oauth-mock-server.js
       "email": "her@bert.de",
       "name": "Herbert"
     }
-  ]
+  ],
+  "tokenExpiresIn": 86400 // 24 hours in seconds
 }
 ```

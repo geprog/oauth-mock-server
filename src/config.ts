@@ -10,12 +10,15 @@ export type ConfigUser = {
 };
 
 export type Config = {
+  port: number;
   realm: string;
   users: ConfigUser[];
+  tokenExpiresIn: number;
 };
 
 export function getConfig(): Config {
   const defaultConfig = <Config>{
+    port: 5000,
     realm: process.env.REALM || 'my-project',
     users: [
       {
@@ -37,6 +40,7 @@ export function getConfig(): Config {
         name: 'Herbert',
       },
     ],
+    tokenExpiresIn: 24 * 60 * 60, // 24 hours in seconds
   };
 
   const configPath = path.join(cwd(), 'oauth-mock-server.json');
