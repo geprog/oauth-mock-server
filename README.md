@@ -32,6 +32,6 @@ You can adjust the default configuration by placing a file `oauth-mock-server.js
       "name": "Herbert"
     }
   ],
-  "tokenExpiresIn": 86400, // 24 hours in seconds
+  "tokenExpiresIn": 86400 // 24 hours in seconds
 }
 ```
