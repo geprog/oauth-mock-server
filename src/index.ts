@@ -67,7 +67,7 @@ server.get(`/auth/realms/${config.realm}/protocol/openid-connect/auth`, async (r
               .map(
                 (user) =>
                   `<li>
-                    <a href="/do-login?username=${user.username}&redirect_uri=${query.redirect_uri}">${user.username}</a>
+                    <a href="/do-login?username=${user.username}&redirect_uri=${query.redirect_uri}">${user.name}</a>
                   </li>`,
               )
               .join('')}
