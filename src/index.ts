@@ -149,7 +149,7 @@ async function start() {
   try {
     // eslint-disable-next-line no-console
     console.log(`Starting server http://localhost:${config.port} ...`);
-    await server.listen({ port: config.port, host: '0.0.0.0' });
+    await server.listen({ port: config.port, host: '::' });
   } catch (err) {
     server.log.error(err);
     process.exit(1);
