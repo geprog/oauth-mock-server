@@ -1,5 +1,6 @@
-import fs from 'fs';
 import { cwd } from 'node:process';
+
+import fs from 'fs';
 import path from 'path';
 
 export type ConfigUser = {

@@ -18,6 +18,7 @@ server.get(`/auth/realms/${config.realm}/protocol/openid-connect/auth`, async (r
   const query = request.query as { redirect_uri: string; error?: string };
 
   const template = `
+    <!DOCTYPE html>
     <html>
       <head>
         <title>Login</title>
@@ -28,8 +29,8 @@ server.get(`/auth/realms/${config.realm}/protocol/openid-connect/auth`, async (r
           }
 
           body {
-            height: 100%;
-            width: 100%;
+            height: 100vh;
+            width: 100vw;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -40,6 +41,7 @@ server.get(`/auth/realms/${config.realm}/protocol/openid-connect/auth`, async (r
           form {
             display: flex;
             flex-direction: column;
+            gap: .2rem;
           }
 
           input {
@@ -141,8 +143,13 @@ server.get(`/auth/realms/${config.realm}/protocol/openid-connect/userinfo`, (req
 });
 
 server.get(`/auth/realms/${config.realm}/protocol/openid-connect/logout`, async (request, reply) => {
-  const query = request.query as { redirect_uri: string };
-  await reply.redirect(query.redirect_uri);
+  const query = request.query as { redirect_uri?: string; post_logout_redirect_uri?: string };
+  const redirectURI = query.redirect_uri || query.post_logout_redirect_uri;
+  if (redirectURI) {
+    await reply.redirect(redirectURI);
+    return;
+  }
+  await reply.code(400).send(new Error('Missing redirect_uri or post_logout_redirect_uri'));
 });
 
 async function start() {
