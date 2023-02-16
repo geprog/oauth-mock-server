@@ -1,6 +1,9 @@
 name: Release
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -36,7 +39,17 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Release Dry Run
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          DOCKER_REGISTRY_USER: geprog
+          DOCKER_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run release --dry-run
+
       - name: Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
