@@ -4,3 +4,4 @@ coverage/
 junit.xml
 *.tgz
 report.json
+oauth-mock-server.json
