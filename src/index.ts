@@ -78,7 +78,9 @@ server.get(`/auth/realms/${config.realm}/protocol/openid-connect/auth`, async (r
                   `<li>
                     <div>
                       <div>
-                        <a href="/do-login?username=${user.username}&redirect_uri=${query.redirect_uri}">${user.name}</a>
+                        <a href="/do-login?username=${user.username}&redirect_uri=${query.redirect_uri}">
+                          ${user.name}
+                        </a>
                         (${user.email})
                       </div>
                       ${user.description ? `<i>${user.description}</i>` : ''}

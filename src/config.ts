@@ -40,7 +40,7 @@ export function getConfig(): Config {
         username: 'herbert',
         email: 'her@bert.de',
         name: 'Herbert',
-        description: 'This is our good old friend Herbert'
+        description: 'This is our good old friend Herbert',
       },
     ],
     tokenExpiresIn: 24 * 60 * 60, // 24 hours in seconds
