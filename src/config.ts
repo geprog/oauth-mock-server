@@ -8,6 +8,7 @@ export type ConfigUser = {
   username: string;
   email: string;
   name: string;
+  description?: string;
 };
 
 export type Config = {
@@ -39,6 +40,7 @@ export function getConfig(): Config {
         username: 'herbert',
         email: 'her@bert.de',
         name: 'Herbert',
+        description: 'This is our good old friend Herbert'
       },
     ],
     tokenExpiresIn: 24 * 60 * 60, // 24 hours in seconds
