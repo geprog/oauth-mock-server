@@ -50,6 +50,11 @@ server.get(`/auth/realms/${config.realm}/protocol/openid-connect/auth`, async (r
             padding: .5rem;
             border-radius: .25rem;
           }
+
+          li > div {
+            display: flex;
+            flex-direction: column;
+          }
         </style>
       </head>
       <body>
@@ -71,7 +76,15 @@ server.get(`/auth/realms/${config.realm}/protocol/openid-connect/auth`, async (r
               .map(
                 (user) =>
                   `<li>
-                    <a href="/do-login?username=${user.username}&redirect_uri=${query.redirect_uri}">${user.name}</a>
+                    <div>
+                      <div>
+                        <a href="/do-login?username=${user.username}&redirect_uri=${query.redirect_uri}">
+                          ${user.name}
+                        </a>
+                        (${user.email})
+                      </div>
+                      ${user.description ? `<i>${user.description}</i>` : ''}
+                    </div>
                   </li>`,
               )
               .join('')}
