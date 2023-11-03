@@ -25,7 +25,7 @@
     "clean": "rm -rf dist/ node_modules/",
     "lint": "eslint --max-warnings 0 .",
     "lint:format": "prettier --check .",
-    "start": "pnpm tsup src/index.ts --dts --format cjs,esm --watch",
+    "start": "pnpm tsup src/index.ts --dts --format cjs,esm --watch --onSuccess 'node dist/index.js'",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -54,7 +54,7 @@
     "vitest": "0.28.4"
   },
   "engines": {
-    "pnpm": "7"
+    "pnpm": "8"
   },
   "publishConfig": {
     "access": "public"
