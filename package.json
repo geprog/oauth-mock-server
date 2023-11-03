@@ -54,7 +54,7 @@
     "vitest": "0.28.4"
   },
   "engines": {
-    "pnpm": "8"
+    "pnpm": "7"
   },
   "publishConfig": {
     "access": "public"
